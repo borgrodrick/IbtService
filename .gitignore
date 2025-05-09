@@ -1,0 +1,158 @@
+﻿# .NET Core and .NET Framework
+## Ignore Visual Studio temporary files, build results, and generated files
+## Also ignore Rider and other common IDE temporary files
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Rr]elease/
+[Dd]ebug/
+[Xx]64/
+[Aa]rm64/
+[Ww]eb/
+[Tt]est[Rr]esults/
+publish/
+artifacts/
+
+# Visual Studio Code specific
+.vscode/
+
+# Rider specific
+.idea/
+*.iml
+
+# Visual Studio specific
+.vs/
+*.VC.db
+*.VC.VC.opendb
+
+# Build server files
+*.nupkg
+*.snupkg
+# NuGet packages folder - typically managed by NuGet restore, not checked in
+[Pp]ackages/
+# except build/, which is used by some projects to store MSBuild targets
+!packages/build/
+
+# Dotnet Tooling
+# Ignore a global tools manifest (if you create one in your solution directory)
+.config/dotnet-tools.json
+
+# Roslyn files
+*.roslynuitest.cs
+*.ruleset
+
+# Test files
+*.trx
+*.coverage
+*.coveragexml
+*.coverlet.json
+*.opencover.xml
+*.codecov.xml
+*.lcov
+*.gcov
+*.junit
+
+# Environment-specific files
+appsettings.Development.json
+appsettings.*.json
+!appsettings.json # Usually, the base appsettings.json is checked in
+secrets.json
+*.env
+.env.*
+!.env.example # Often an example env file is checked in
+
+# Local publish profiles
+Properties/PublishProfiles/*.pubxml
+*.publish.xml
+
+# Service Fabric specific files
+ApplicationParameters/
+BuildLogs/
+*.sfproj.user
+
+# Windows files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Mac OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux files
+*~
+
+# Log files
+*.log
+logs/
+
+# Other temporary files
+*.tmp
+*.temp
+*.swp
+*.bak
+
+# Node.js (if you're using frontend tools like npm/yarn within your .NET solution)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json # Often committed, but can be ignored if yarn.lock or pnpm-lock.yaml is used
+# pnpm-lock.yaml # Often committed
+
+# Specific files from the exercise (if they are generated outputs and not source)
+# Example: If InstrumentNotification.xml is always generated and shouldn't be tracked
+# InstrumentNotification.xml
+
+# If your test data (like IBT.xml) is part of the source and needed for tests,
+# ensure it's NOT listed here or is explicitly unignored with ! if a broader rule catches it.
+# For example, if you had a rule like `TestData/*.xml` but wanted to keep one specific file:
+# !TestData/KeepThisOne.xml
+
+# Caching
+*.cache
+
+# F#
+# FSharp Interactive session history
+.fsi_history
+
+# Paket dependency manager
+.paket/paket.exe
+paket-files/
+
+#FAKE - F# Make
+.fake/
+
+# ASP.NET Scaffolding
+# If you are using ASP.NET Scaffolding, it creates a ScaffoldingReadMe.txt file.
+# You can ignore it if you don't want to commit it.
+ScaffoldingReadMe.txt
+
+# User Secrets - The User Secrets ID is stored in the csproj file,
+# but the actual secrets are stored outside the project directory.
+# No specific .gitignore entry needed for the secrets themselves,
+# but ensure any local config files pointing to them are ignored if necessary.
+
+# Rider Code Coverage
+# Rider coverage data files
+*.snapshot
+
+# BenchmarkDotNet
+BenchmarkDotNet.Artifacts/
+
+# Entity Framework Core Migrations (if you prefer not to commit history for some strategies)
+# Generally, migrations ARE committed. Only ignore if you have a specific reason.
+# Migrations/
+
+# StyleCop
+StyleCop.Cache
+StyleCop.settings # Can be user-specific, but often shared
+
