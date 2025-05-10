@@ -45,7 +45,7 @@ The solution loosely follows **Clean Architecture** principles to promote separa
     * **DatabaseLoggerSimulator:** A concrete implementation of `IDatabaseLogger` that simulates database interactions by writing to the console.
     * File system interactions (e.g., writing `InstrumentNotification.xml` for Partner B) are also handled by specific application handlers but represent an infrastructure concern.
 * **Domain Layer:** (Implicit) While not explicitly large for this exercise, the `IbtData` record and the rules for extracting data from the XML (e.g., how to identify the ISIN) can be considered part of the domain knowledge.
-* **Test Projects:**
+* **Test Projects:** Both Unit and integration test are in same project for simplicity 
     * **Unit Tests:** Focus on testing individual components (e.g., `XmlParser`, MediatR handlers) in isolation.
     * **Integration Tests:** Verify the interaction between components, such as the `IngestionWorker` processing a file and triggering the MediatR pipeline.
 
