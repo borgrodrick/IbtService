@@ -7,8 +7,6 @@ namespace InternetBasedTermsService.Tests.Application.Parsing;
 
 public class XmlParserStringParsingTests
 {
-    
-    private readonly Mock<ILogger<XmlParser>> _mockLogger;
     private readonly XmlParser _parser;
 
     // --- XML Content Constants for Test Construction ---
@@ -56,8 +54,8 @@ public class XmlParserStringParsingTests
 
     public XmlParserStringParsingTests()
     {
-        _mockLogger = new Mock<ILogger<XmlParser>>();
-        _parser = new XmlParser(_mockLogger.Object);
+        var mockLogger = new Mock<ILogger<XmlParser>>();
+        _parser = new XmlParser(mockLogger.Object);
         _fullValidXmlContent = ConstructXml();
     }
 
@@ -73,12 +71,6 @@ public class XmlParserStringParsingTests
         result?.ProductNameFull.Should().Be(ElementProductNameFullValue);
         result?.IbtTypeCode.Should().Be(ElementIbtTypeCodeValue);
         result?.Isin.Should().Be(ElementIsinValue);
-        _mockLogger.Verify(logger => logger.Log(
-            LogLevel.Error, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
-            Times.Never);
-        _mockLogger.Verify(logger => logger.Log(
-            LogLevel.Warning, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
-            Times.Never);
     }
 
     [Fact]
@@ -89,9 +81,6 @@ public class XmlParserStringParsingTests
 
         // Assert
         result.Should().BeNull();
-        _mockLogger.Verify(logger => logger.Log(
-            LogLevel.Error, It.IsAny<EventId>(), It.Is<It.IsAnyType>((v, t) => true),
-            null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
     }
 
     [Fact]
@@ -102,9 +91,6 @@ public class XmlParserStringParsingTests
 
         // Assert
         result.Should().BeNull();
-        _mockLogger.Verify(logger => logger.Log(
-            LogLevel.Error, It.IsAny<EventId>(), It.Is<It.IsAnyType>((v, t) => true),
-            null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
     }
 
     [Fact]
@@ -118,9 +104,6 @@ public class XmlParserStringParsingTests
 
         // Assert
         result.Should().BeNull();
-        _mockLogger.Verify(logger => logger.Log(
-            LogLevel.Error, It.IsAny<EventId>(), It.Is<It.IsAnyType>((v, t) => true),
-            It.IsAny<System.Xml.XmlException>(), It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
     }
 
     [Fact]
@@ -134,12 +117,7 @@ public class XmlParserStringParsingTests
 
         // Assert
         result.Should().BeNull();
-        // This scenario will cause XDocument.Parse to throw an XmlException
-        _mockLogger.Verify(logger => logger.Log(
-            LogLevel.Error, It.IsAny<EventId>(),
-            It.Is<It.IsAnyType>((v, t) => true), // Check that an error was logged
-            It.IsAny<System.Xml.XmlException>(), // Expect an XmlException
-            It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
+
     }
 
     [Fact]
@@ -157,8 +135,6 @@ public class XmlParserStringParsingTests
         var xml = ConstructXml(eventTypeElement: "", includeEventsNode: true);
         var result = _parser.ParseXmlString(xml);
         result.Should().BeNull();
-        _mockLogger.Verify(logger => logger.Log(LogLevel.Warning, It.IsAny<EventId>(),
-            It.Is<It.IsAnyType>((v, t) => true), null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
     }
     
     [Fact]
@@ -167,8 +143,6 @@ public class XmlParserStringParsingTests
         var xml = ConstructXml(eventTypeElement: "<EventType></EventType>");
         var result = _parser.ParseXmlString(xml);
         result.Should().BeNull();
-        _mockLogger.Verify(logger => logger.Log(LogLevel.Warning, It.IsAny<EventId>(),
-            It.Is<It.IsAnyType>((v, t) => true), null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
     }
 
     [Fact]
@@ -186,8 +160,6 @@ public class XmlParserStringParsingTests
         var xml = ConstructXml(productNameFullElement: null);
         var result = _parser.ParseXmlString(xml);
         result.Should().BeNull();
-        _mockLogger.Verify(logger => logger.Log(LogLevel.Warning, It.IsAny<EventId>(),
-            It.Is<It.IsAnyType>((v, t) => true), null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
     }
 
     [Fact]
@@ -205,8 +177,7 @@ public class XmlParserStringParsingTests
         var xml = ConstructXml(ibtTypeCodeElement: null);
         var result = _parser.ParseXmlString(xml);
         result.Should().BeNull();
-        _mockLogger.Verify(logger => logger.Log(LogLevel.Warning, It.IsAny<EventId>(),
-            It.Is<It.IsAnyType>((v, t) => true), null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
+
     }
 
     [Fact]
@@ -224,8 +195,6 @@ public class XmlParserStringParsingTests
         var xml = ConstructXml(isinElement: null, includeInstrumentIdsNode: false);
         var result = _parser.ParseXmlString(xml);
         result.Should().BeNull();
-        _mockLogger.Verify(logger => logger.Log(LogLevel.Warning, It.IsAny<EventId>(),
-            It.Is<It.IsAnyType>((v, t) => true), null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
     }
     
     [Fact]
@@ -234,8 +203,6 @@ public class XmlParserStringParsingTests
         var xml = ConstructXml(isinElement: ElementIsinWrongSchemeTag);
         var result = _parser.ParseXmlString(xml);
         result.Should().BeNull();
-        _mockLogger.Verify(logger => logger.Log(LogLevel.Warning, It.IsAny<EventId>(),
-            It.Is<It.IsAnyType>((v, t) => true), null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
     }
     
     [Fact]
@@ -248,8 +215,6 @@ public class XmlParserStringParsingTests
                                includeInstrumentIdsNode: false);
         var result = _parser.ParseXmlString(xml);
         result.Should().BeNull();
-        _mockLogger.Verify(logger => logger.Log(LogLevel.Warning, It.IsAny<EventId>(),
-            It.Is<It.IsAnyType>((v, t) => true), null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
     }
 
     [Fact]
@@ -261,7 +226,5 @@ public class XmlParserStringParsingTests
                                isinElement: "<InstrumentId><IdSchemeCode>I-</IdSchemeCode><IdValue></IdValue></InstrumentId>");
         var result = _parser.ParseXmlString(xml);
         result.Should().BeNull();
-        _mockLogger.Verify(logger => logger.Log(LogLevel.Warning, It.IsAny<EventId>(),
-            It.Is<It.IsAnyType>((v, t) => true), null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
     }
 }

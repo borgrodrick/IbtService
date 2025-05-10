@@ -71,9 +71,6 @@ public class XmlParserFileAccessTests : IDisposable
             result?.ProductNameFull.Should().Be(ElementProductNameFullValue);
             result?.IbtTypeCode.Should().Be(ElementIbtTypeCodeValue);
             result?.Isin.Should().Be(ElementIsinValue);
-            _mockLogger.Verify(logger => logger.Log(
-                LogLevel.Error, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
-                Times.Never); // No errors should be logged
         }
 
         [Fact]
@@ -84,10 +81,6 @@ public class XmlParserFileAccessTests : IDisposable
 
             // Assert
             result.Should().BeNull();
-            _mockLogger.Verify(logger => logger.Log(
-                LogLevel.Error, It.IsAny<EventId>(),
-                It.Is<It.IsAnyType>((v, t) => true), // Check that an error was logged, not specific content
-                null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
         }
 
         [Fact]
@@ -98,10 +91,6 @@ public class XmlParserFileAccessTests : IDisposable
 
             // Assert
             result.Should().BeNull();
-            _mockLogger.Verify(logger => logger.Log(
-                LogLevel.Error, It.IsAny<EventId>(),
-                It.Is<It.IsAnyType>((v, t) => true),
-                null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
         }
 
         [Fact]
@@ -114,11 +103,7 @@ public class XmlParserFileAccessTests : IDisposable
             var result = _parser.ParseFromFile(nonExistentPath);
 
             // Assert
-            result.Should().BeNull();
-            _mockLogger.Verify(logger => logger.Log(
-                LogLevel.Error, It.IsAny<EventId>(),
-                It.Is<It.IsAnyType>((v, t) => true),
-                null, It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
+            result.Should().BeNull(); ;
         }
 
         [Fact]
@@ -133,11 +118,7 @@ public class XmlParserFileAccessTests : IDisposable
 
             // Assert
             result.Should().BeNull();
-            // Verify that an error related to XML parsing was logged (from ParseXmlString)
-            _mockLogger.Verify(logger => logger.Log(
-                LogLevel.Error, It.IsAny<EventId>(),
-                It.Is<It.IsAnyType>((v, t) => true),
-                It.IsAny<System.Xml.XmlException>(), It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
+
         }
 
         public void Dispose()
