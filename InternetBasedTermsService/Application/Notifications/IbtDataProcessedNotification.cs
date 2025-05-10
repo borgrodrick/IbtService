@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace InternetBasedTermsService.Infrastructure;
+namespace InternetBasedTermsService.Application.Notifications;
 
 public record IbtDataProcessedNotification(
     string EventType,

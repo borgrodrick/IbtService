@@ -1,7 +1,11 @@
-using InternetBasedTermsService.Application.Handlers;
+using System.Reflection;
+using InternetBasedTermsService.Application.Behaviours;
+using InternetBasedTermsService.Application.Commands;
+using InternetBasedTermsService.Application.Interfaces;
 using InternetBasedTermsService.Application.Parsing;
-using InternetBasedTermsService.Infrastructure;
+using InternetBasedTermsService.Infrastructure.Persistence;
 using InternetBasedTermsService.Infrastructure.Workers;
+using MediatR;
 
 namespace InternetBasedTermsService;
 
@@ -16,18 +20,26 @@ public class Program
         Host.CreateDefaultBuilder(args)
             .ConfigureServices((hostContext, services) =>
             {
-                // Register application services needed by handlers or worker
-                services.AddSingleton<DatabaseLoggerSimulator>();
-                services.AddSingleton<XmlParser>(); // For IngestionWorker and potentially direct use
+                services.AddSingleton<IDatabaseLogger, DatabaseLoggerSimulator>();
+                services.AddSingleton<XmlParser>();
 
-                // Register MediatR and scan for Handlers (INotificationHandler)
-                // Ensure the assembly containing your notification handlers is specified.
-                services.AddMediatR(cfg =>
-                    cfg.RegisterServicesFromAssembly(typeof(DbLoggingNotificationHandler).Assembly));
-                // Or use Assembly.GetExecutingAssembly() if handlers are in the main project.
+                services.AddMediatR(cfg => {
+                    // Scan for all MediatR handlers (IRequestHandler, INotificationHandler)
+                    // Ensure all relevant handler assemblies are scanned.
+                    // If handlers are in the same assembly as Program.cs:
+                    cfg.RegisterServicesFromAssembly(typeof(LogEventCommand).Assembly);
+                    // cfg.RegisterServicesFromAssembly(typeof(LoggingBehavior<,>).Assembly);
 
-                // Register the IngestionWorker as a Hosted Service
+
+                    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                    // Or, specify the assembly more directly, e.g., if handlers are in a class library:
+                    // cfg.RegisterServicesFromAssembly(typeof(LogEventCommandHandler).Assembly);
+
+                    // Register the pipeline behavior
+                    // This will apply to all IRequest handlers
+                    cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+                });
+
                 services.AddHostedService<IngestionWorker>();
-
             });
 }

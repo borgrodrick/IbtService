@@ -1,4 +1,5 @@
-﻿using InternetBasedTermsService.Application.Parsing;
+﻿using InternetBasedTermsService.Application.Notifications;
+using InternetBasedTermsService.Application.Parsing;
 using MediatR;
 
 namespace InternetBasedTermsService.Infrastructure.Workers;
@@ -10,7 +11,7 @@ public class IngestionWorker(
     IConfiguration configuration)
     : BackgroundService
 {
-    // Inject IMediator
+
     private readonly string _ibtFilePath = configuration.GetValue<string>("InputFilePath") ?? "IBT.xml";
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -24,7 +25,7 @@ public class IngestionWorker(
             return;
         }
 
-        var parsedData = parser.Parse(_ibtFilePath);
+        var parsedData = parser.ParseFromFile(_ibtFilePath);
 
         if (parsedData != null && !stoppingToken.IsCancellationRequested)
         {

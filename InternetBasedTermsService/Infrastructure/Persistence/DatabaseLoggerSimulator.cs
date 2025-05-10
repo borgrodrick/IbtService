@@ -1,6 +1,8 @@
-﻿namespace InternetBasedTermsService.Application.Handlers;
+﻿using InternetBasedTermsService.Application.Interfaces;
 
-public class DatabaseLoggerSimulator(ILogger<DatabaseLoggerSimulator> logger)
+namespace InternetBasedTermsService.Infrastructure.Persistence;
+
+public class DatabaseLoggerSimulator(ILogger<DatabaseLoggerSimulator> logger) : IDatabaseLogger
 {
     public void LogEvent(string eventType, DateTime timestamp)
     {
