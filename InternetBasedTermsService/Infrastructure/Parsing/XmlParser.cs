@@ -3,7 +3,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using InternetBasedTermsService.Domain;
 
-namespace InternetBasedTermsService.Application.Parsing;
+namespace InternetBasedTermsService.Infrastructure.Parsing;
 
 public class XmlParser(ILogger<XmlParser> logger)
 {

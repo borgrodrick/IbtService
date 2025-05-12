@@ -1,13 +1,9 @@
-﻿using Xunit;
-using Moq;
-using FluentAssertions;
+﻿using FluentAssertions;
+using InternetBasedTermsService.Infrastructure.Parsing;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
-using System.Xml.Linq;
-using InternetBasedTermsService.Application.Parsing;
+using Moq;
 
-namespace InternetBasedTermsService.Tests.Application.Parsing;
+namespace InternetBasedTermsService.Tests.Infrastructure.Parsing;
 
 public class XmlParserFileAccessTests : IDisposable
     {

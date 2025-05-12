@@ -1,5 +1,5 @@
 ﻿using InternetBasedTermsService.Application.Notifications;
-using InternetBasedTermsService.Application.Parsing;
+using InternetBasedTermsService.Infrastructure.Parsing;
 using MediatR;
 
 namespace InternetBasedTermsService.Infrastructure.Workers;

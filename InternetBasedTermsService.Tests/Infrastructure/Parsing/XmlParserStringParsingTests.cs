@@ -1,9 +1,9 @@
-﻿using Moq;
-using FluentAssertions;
+﻿using FluentAssertions;
+using InternetBasedTermsService.Infrastructure.Parsing;
 using Microsoft.Extensions.Logging;
-using InternetBasedTermsService.Application.Parsing;
+using Moq;
 
-namespace InternetBasedTermsService.Tests.Application.Parsing;
+namespace InternetBasedTermsService.Tests.Infrastructure.Parsing;
 
 public class XmlParserStringParsingTests
 {

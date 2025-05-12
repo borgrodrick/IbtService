@@ -2,7 +2,7 @@ using System.Reflection;
 using InternetBasedTermsService.Application.Behaviours;
 using InternetBasedTermsService.Application.Commands;
 using InternetBasedTermsService.Application.Interfaces;
-using InternetBasedTermsService.Application.Parsing;
+using InternetBasedTermsService.Infrastructure.Parsing;
 using InternetBasedTermsService.Infrastructure.Persistence;
 using InternetBasedTermsService.Infrastructure.Workers;
 using MediatR;
